@@ -1,0 +1,8 @@
+
+<div class="container">
+    <div class="card">
+        <h4>{{title}}</h4>
+        <button pButton (click)="generateDrNote()" [loading]="drLoading">Generate Debit Note</button> |
+        <button pButton (click)="generateCrNote()" [loading]="crLoading">Generate Credit Note</button>
+    </div>
+</div>

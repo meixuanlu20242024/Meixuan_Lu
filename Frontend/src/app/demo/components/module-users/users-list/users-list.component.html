@@ -1,0 +1,82 @@
+<div class="card">
+    <h4>{{title}}</h4>
+    <p-contextMenu #cm [model]="menuItems" appendTo="body"></p-contextMenu>
+    <p-table
+        [contextMenu]="cm"
+        [(contextMenuSelection)]="selectedUser"
+        [columns]="cols"
+        [value]="users"
+        (onLazyLoad)="loadData($event)"
+        selectionMode="single"
+        [responsiveLayout]="'stack'"
+        [breakpoint]="'960px'"
+        dataKey="id"
+        [lazy]="true"
+        [paginator]="true"
+        [rows]="20"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10, 25, 50 , 100]"
+        rowExpandMode="single"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <p-button label="New User" routerLink="/users/create-user" icon="pi pi-plus"></p-button>
+            </div>
+        </ng-template>
+
+
+        <ng-template pTemplate="header" let-columns>
+            <tr >
+
+                <th></th>
+                <th *ngFor="let col of columns">
+                    {{ col.header }}
+                </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-object>
+            <tr [pContextMenuRow]="object">
+                <td>
+                    <p-toast></p-toast>
+
+                </td>
+
+
+                <td>{{ object.id }}</td>
+                <td>
+                    <div class="p-badge" [ngClass]="{
+                            'p-badge-danger': object.enabled === false,
+                            'p-badge-success': object.enabled === true
+                        }">
+                        {{ object?.enabled ? 'Yes' : 'No' }}
+                    </div>
+                </td>
+                <td class="p-column-title">{{ object?.firstName }}</td>
+                <td class="p-column-title">{{ object?.lastName }}</td>
+                <td class="p-column-title">{{ object?.email }}</td>
+                <td class="p-column-title">{{ object?.mobile }}</td>
+                <td class="p-column-title">{{ object?.nationalId }}</td>
+                <td class="p-column-title">{{ object?.passwordChangedTime }}</td>
+
+
+
+
+
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-table>
+</div>
+

@@ -1,0 +1,21 @@
+
+
+<p-dialog [header]="title" [modal]="true" [(visible)]="visible" [style]="{ width: '50vw', height: '500px' }">
+
+    <h5 >Sanction Details</h5>
+    <p-panel *ngFor="let response of clientSanctionCheckResponse">
+        <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">Sanctions Check  Response for {{response.firstName}} {{response.firstName}} </span></ng-template>
+
+        <p>ID : {{response.dataId}}</p>
+        <p>Version Number : {{response.versionNum}}</p>
+        <p>First Name : {{response.firstName}}</p>
+        <p>Last Name : {{response.lastName}}</p>
+        <p>UN List Type : {{response.unListType}}</p>
+        <p>Reference Number : {{response.referenceNumber}}</p>
+        <p>Date Listed{{response.comments}}</p>
+        <ng-template pTemplate="footer"> Sanction Details </ng-template>
+    </p-panel>
+
+
+
+</p-dialog>

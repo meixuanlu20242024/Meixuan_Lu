@@ -1,0 +1,54 @@
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 1;
+    padding: 10px;
+}
+
+.left-column {
+    flex: 3;
+}
+
+table {
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+}
+
+
+.custom-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* Bootstrap primary button color */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+#tableAddress {
+    border-collapse: collapse;
+    border: none;
+}
+
+/* Style for table data cells within the specific table */
+#tableAddress td {
+    border: none; /* Remove cell borders */
+    padding: 5px; /* Add some spacing between cell content */
+}
+
+/* Button hover effect */
+.custom-button:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}

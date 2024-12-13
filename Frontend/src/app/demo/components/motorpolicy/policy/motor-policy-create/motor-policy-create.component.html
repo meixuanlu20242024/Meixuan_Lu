@@ -1,0 +1,189 @@
+<div class="grid">
+    <p-messages></p-messages>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="col-12">
+        <div class="card">
+            <h5>{{title}}</h5>
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-3">
+
+                    <label for="policyStatus">Insured</label>
+                    <p-dropdown
+                        [options]="retailClients"
+                        placeholder="Select Insured"
+                        optionLabel="name"
+                        [showClear]="true"
+                        [filter]="true"
+                        formControlName="insured"
+
+                    ></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-3">
+
+                    <label for="policyStatus">Insurer</label>
+                    <p-dropdown
+                        [options]="insurers"
+                        placeholder="Select Insurer"
+                        optionLabel="name"
+                        [showClear]="true"
+                        [filter]="true"
+                        formControlName="insurer"
+
+                    ></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-3">
+
+                    <label for="fleetIndividual">Fleet or Individual</label>
+
+                    <p-dropdown
+                        [options]="fleetIndividuals"
+                        placeholder="Select Fleet or Individual"
+                        [showClear]="true"
+                        formControlName="fleetIndividual"
+                        id="fleetIndividual"
+
+                    ></p-dropdown>
+                </div>
+
+                <div class="field col-12 md:col-3">
+
+                    <label for="motorPolicyDocuments">Upload Documents</label>
+
+
+                        <input pInputText type="file" (change)="onFileSelected($event)" id="motorPolicyDocuments" />
+
+                </div>
+
+
+                <div class="field col-12 md:col-3">
+
+                        <label for="policyStatus">Policy Status</label>
+                    <p-dropdown
+                        [options]="policyStatuses"
+                        placeholder="Select Policy Status"
+                        [showClear]="true"
+                        id="policyStatus"
+                        formControlName="policyStatus"
+
+                    ></p-dropdown>
+
+
+                </div>
+                <div class="field col-12 md:col-3">
+
+                        <label for="currency">Currency</label>
+                    <p-dropdown
+                        [options]="currencies"
+                        placeholder="Select Currency"
+                        [showClear]="true"
+                        [required]="true"
+                        formControlName="currency"
+                        id="currency"
+                    >
+
+                    </p-dropdown>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label for="periodFrom">Period From</label>
+                    <p-calendar formControlName="periodFrom" id="periodFrom"></p-calendar >
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label for="periodTo">Period To</label>
+                    <p-calendar formControlName="periodTo" id="periodTo"></p-calendar >
+                    <p-message *ngIf="form.get('periodTo').hasError('dateRangeError')" severity="error" text="Period To must be after Period From"></p-message>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label for="policyNo">Policy Number</label>
+                    <div style="display: flex; align-items: center;">
+                        <input pInputText formControlName="policyNo" type="text" id="policyNo" style="flex: 1; margin-right: 10px;" [disabled]="isNoGenerated" />
+                        <p-button label="Generate" icon="pi pi-refresh" (onClick)="generatePolicyNumber()" [disabled]="isNoGenerated"></p-button>
+                    </div>
+
+                </div>
+                <div class="field col-12 md:col-3">
+
+                        <label for="coverType">Cover Type</label>
+                        <p-dropdown
+                            [options]="coverTypes"
+                            placeholder="Select Cover Type"
+                            [showClear]="true"
+                            id="coverType"
+                            formControlName="coverType"
+                        ></p-dropdown>
+
+
+                </div>
+                <div class="field col-12 md:col-3">
+                        <label for="sumInsured">Sum Insured</label>
+                    <p-inputNumber
+                        formControlName="sumInsured"
+
+                        [minFractionDigits]="2"
+                        [maxFractionDigits]="2"
+                        mode="currency"
+                        currency="USD"
+                        id="sumInsured"
+                    ></p-inputNumber>
+                </div>
+
+                <div class="field col-12 md:col-3">
+                        <label for="premium">Premium</label>
+                    <p-inputNumber
+                        formControlName="premium"
+
+                        [minFractionDigits]="2"
+                        [maxFractionDigits]="2"
+                        mode="currency"
+                        currency="USD"
+                        id="premium"
+                    ></p-inputNumber>
+                </div>
+
+                <div class="field col-12 md:col-3">
+                        <label for="governmentLevy">Government Levy</label>
+                    <p-inputNumber
+                        formControlName="governmentLevy"
+
+                        [minFractionDigits]="2"
+                        [maxFractionDigits]="2"
+                        mode="currency"
+                        currency="USD"
+                        id="governmentLevy"
+                    ></p-inputNumber>
+                </div>
+
+                <div class="field col-12 md:col-3">
+                        <label for="stampDuty">Stamp Duty</label>
+                    <p-inputNumber
+                        formControlName="stampDuty"
+
+                        [minFractionDigits]="2"
+                        [maxFractionDigits]="2"
+                        mode="currency"
+                        currency="USD"
+                        id="stampDuty"
+                    ></p-inputNumber>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label for="rate">Rate</label>
+                    <p-inputNumber
+                        formControlName="rate"
+                        [min]="0"
+                        [max]="100"
+                        [mode]="'decimal'"
+                        [suffix]="'%'"
+                        id="rate"
+                    ></p-inputNumber>
+                </div>
+
+            </div>
+            <div class="p-field">
+                <button pButton type="submit" label="Submit" [disabled]="!form.valid"
+                ></button>
+<!--                  -->
+            </div>
+        </div>
+    </div>
+
+    </form>
+</div>

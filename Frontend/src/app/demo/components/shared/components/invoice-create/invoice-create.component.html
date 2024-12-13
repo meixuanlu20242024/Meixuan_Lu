@@ -1,0 +1,91 @@
+
+
+
+<p-dialog header="Creating {{policyType}}  Invoice for  {{policy?.insured?.name}} {{policy?.insured?.lastName}} policy no :  {{policy?.policyNo}}"
+          [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+
+          [maximizable]="true"
+          [closeOnEscape]="true"
+          (onHide)="closeDialog()"
+          [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="true">
+
+    <form #form="ngForm" (ngSubmit)="submitForm()">
+        <div class="grid">
+            <p-messages></p-messages>
+            <div class="col-12">
+                <div class="card">
+                    <div class="p-fluid p-formgrid grid">
+
+
+                        <div class="field sm:col-12 md:col-6 lg:col-3">
+                            <label>Payment Date</label>
+                            <div class="p-inputwrapper" >
+
+                                <p-calendar
+                                    name="paymentDate"
+                                    #paymentDate="ngModel"
+                                    [(ngModel)]="invoice.paymentDate"
+                                    required
+                                ></p-calendar >
+                            </div>
+
+                        </div>
+
+
+                        <div class="field sm:col-12 md:col-6 lg:col-3">
+
+                            <label>Payment Amount</label>
+                            <p-inputNumber
+                                [minFractionDigits]="2"
+                                [maxFractionDigits]="2"
+                                mode="currency"
+                                currency="USD"
+                                name="paymentAmount"
+                                #paymentAmount="ngModel"
+                                [(ngModel)]="invoice.paymentAmount"
+                                required
+                            ></p-inputNumber>
+                        </div>
+
+                        <div class="field sm:col-12 md:col-6 lg:col-3">
+                            <label>Payment Reference</label>
+                                <input pInputText
+                                       type="text"
+                                       name="paymentReference"
+                                       #paymentReference="ngModel"
+                                       [(ngModel)]="invoice.paymentReference"
+                                       required
+
+                                />
+
+                        </div>
+
+                        <div class="field sm:col-12 md:col-6 lg:col-3">
+                            <label>Payment Method</label>
+                            <input pInputText
+                                   type="text"
+                                   name="paymentMethod"
+                                   #paymentMethod="ngModel"
+                                   [(ngModel)]="invoice.paymentMethod"
+                                   required
+
+                            />
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+                <button type="submit" pButton label="Create Invoice "  [loading]="loading" [disabled]="(!form.valid)"></button>
+            </div>
+
+        </div>
+
+    </form>
+
+
+
+</p-dialog>

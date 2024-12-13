@@ -1,0 +1,220 @@
+<form #form="ngForm" (ngSubmit)="submitForm()">
+    <div class="grid">
+        <p-messages></p-messages>
+
+        <div class="col-12">
+            <div class="card">
+                <h5>{{title}}</h5>
+                <div class="p-fluid p-formgrid grid">
+
+                    <div class="field col-12 md:col-3">
+
+                        <label for="fleetIndividual">Fleet or Individual</label>
+
+                        <p-dropdown
+                            [options]="fleetIndividuals"
+                            placeholder="Select Fleet or Individual"
+                            [showClear]="true"
+                            name="fleetIndividual"
+                            #fleetIndividual="ngModel"
+                            [(ngModel)]="policy.fleetIndividual"
+                            id="fleetIndividual"
+
+                        ></p-dropdown>
+                    </div>
+                    <div class="field col-12 md:col-3">
+
+                        <label for="currency">Currency</label>
+                        <p-dropdown
+                            [options]="currencies"
+                            placeholder="Select Currency"
+                            [showClear]="true"
+                            [required]="true"
+                            name="currency"
+                            #currency="ngModel"
+                            [(ngModel)]="policy.currency"
+
+                            id="currency"
+                        >
+
+                        </p-dropdown>
+                    </div>
+
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Period From</label>
+                        <div class="p-inputwrapper" >
+
+                            <p-calendar
+                                name="dateOfLoss"
+                                #dateOfLoss="ngModel"
+                                [(ngModel)]="policy.periodFrom"
+                                required
+                            ></p-calendar >
+                        </div>
+                        <!--                        <p-message *ngIf="claim.dateOfLoss && (dateOfLoss.dirty || dateOfLoss.touched)" severity="error" text="Date of Loss is required"></p-message>-->
+                    </div>
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Period To </label>
+                        <div class="p-inputwrapper" appCibInputDirective>
+                            <p-calendar
+                                name="notificationDate"
+                                #notificationDate="ngModel"
+                                [(ngModel)]="policy.periodTo"
+                                required
+                            ></p-calendar >
+
+                            <!--                            motorPolicyDocuments: [],-->
+                        </div>
+                        <!--                        <p-message *ngIf="claim.dateOfLoss && (dateOfLoss.dirty || dateOfLoss.touched)" severity="error" text="Date of Loss is required"></p-message>-->
+                    </div>
+                    <div class="field m:col-12 md:col-6 lg:col-3">
+
+                        <label for="coverType">Cover Type</label>
+                        <p-dropdown
+                            [options]="coverTypes"
+                            placeholder="Select Cover Type"
+                            [showClear]="true"
+                            id="coverType"
+                            name="coverType"
+                            #coverType="ngModel"
+                            [(ngModel)]="policy.coverType"
+                        ></p-dropdown>
+
+
+                    </div>
+
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Premium</label>
+                        <div class="p-inputwrapper" appCibInputDirective>
+
+                            <p-inputNumber
+                                [minFractionDigits]="2"
+                                [maxFractionDigits]="2"
+                                mode="currency"
+                                currency="USD"
+                                name="premium"
+                                #premium="ngModel"
+                                [(ngModel)]="policy.premium"
+                                required
+                            ></p-inputNumber>
+
+                        </div>
+                        <!--                        <p-message *ngIf="claim.dateOfLoss && (dateOfLoss.dirty || dateOfLoss.touched)" severity="error" text="Date of Loss is required"></p-message>-->
+                    </div>
+
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Sum Insured</label>
+                        <div class="p-inputwrapper" appCibInputDirective>
+
+                            <p-inputNumber
+                                [minFractionDigits]="2"
+                                [maxFractionDigits]="2"
+                                mode="currency"
+                                currency="USD"
+                                name="sumInsured"
+                                #sumInsured="ngModel"
+                                [(ngModel)]="policy.sumInsured"
+                                required
+                            ></p-inputNumber>
+
+                        </div>
+                        <!--                        <p-message *ngIf="claim.dateOfLoss && (dateOfLoss.dirty || dateOfLoss.touched)" severity="error" text="Date of Loss is required"></p-message>-->
+                    </div>
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Stamp Duty</label>
+                        <div class="p-inputwrapper" appCibInputDirective>
+
+                            <p-inputNumber
+                                [minFractionDigits]="2"
+                                [maxFractionDigits]="2"
+                                mode="currency"
+                                currency="USD"
+                                name="stampDuty"
+                                #stampDuty="ngModel"
+                                [(ngModel)]="policy.stampDuty"
+                                required
+                            ></p-inputNumber>
+
+                        </div>
+                        <!--                        <p-message *ngIf="claim.dateOfLoss && (dateOfLoss.dirty || dateOfLoss.touched)" severity="error" text="Date of Loss is required"></p-message>-->
+                    </div>
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Government Levy</label>
+                        <div class="p-inputwrapper" appCibInputDirective>
+
+                            <p-inputNumber
+                                [minFractionDigits]="2"
+                                [maxFractionDigits]="2"
+                                mode="currency"
+                                currency="USD"
+                                name="governmentLevy"
+                                #governmentLevy="ngModel"
+                                [(ngModel)]="policy.governmentLevy"
+                                required
+                            ></p-inputNumber>
+
+                        </div>
+                        <!--                        <p-message *ngIf="claim.dateOfLoss && (dateOfLoss.dirty || dateOfLoss.touched)" severity="error" text="Date of Loss is required"></p-message>-->
+                    </div>
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Rate</label>
+                        <div class="p-inputwrapper" appCibInputDirective>
+
+                            <p-inputNumber
+                                [min]="0"
+                                [max]="100"
+                                [mode]="'decimal'"
+                                [suffix]="'%'"
+                                name="rate"
+                                #rate="ngModel"
+                                [(ngModel)]="policy.rate"
+                                required
+                            ></p-inputNumber>
+
+
+                        </div>
+                    </div>
+
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Policy Number</label>
+                        <div class="p-inputwrapper" appCibInputDirective>
+
+                            <input pInputText
+                                   type="text"
+                                   style="flex: 1; margin-right: 10px;"
+                                   name="policyNo"
+                                   #policyNo="ngModel"
+                                   [(ngModel)]="policy.policyNo"
+                                   required
+
+                            />
+
+                        </div>
+                    </div>
+
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label for="policyStatus">Policy Status</label>
+                        <p-dropdown
+                            [options]="policyStatuses"
+                            placeholder="Select Policy Status"
+                            [showClear]="true"
+                            id="policyStatus"
+                            required
+                            name="policyStatus"
+                            #policyStatus="ngModel"
+                            [(ngModel)]="policy.policyStatus"
+
+
+                        ></p-dropdown>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <button type="submit" pButton label="Submit" [disabled]="(!form.valid) || !form.touched"></button>
+        </div>
+
+    </div>
+</form>
+

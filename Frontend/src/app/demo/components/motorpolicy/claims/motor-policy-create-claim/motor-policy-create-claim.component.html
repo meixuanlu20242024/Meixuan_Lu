@@ -1,0 +1,190 @@
+<form #form="ngForm" (ngSubmit)="submitForm()">
+    <div class="grid">
+        <p-messages></p-messages>
+
+        <div class="col-12">
+            <div class="card">
+                <h5>{{title}}</h5>
+                <div class="p-fluid p-formgrid grid">
+
+
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Date of Loss</label>
+                        <div class="p-inputwrapper" >
+
+                            <p-calendar
+                                name="dateOfLoss"
+                                #dateOfLoss="ngModel"
+                                [(ngModel)]="claim.dateOfLoss"
+                                required
+                            ></p-calendar >
+                        </div>
+                        <!--                        <p-message *ngIf="claim.dateOfLoss && (dateOfLoss.dirty || dateOfLoss.touched)" severity="error" text="Date of Loss is required"></p-message>-->
+                    </div>
+
+
+
+
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Claim Number</label>
+                        <div style="display: flex; align-items: center;">
+
+                            <input pInputText
+                                   type="text"
+                                   style="flex: 1; margin-right: 10px;"
+                                   name="claimNumber"
+                                   #claimNumber="ngModel"
+                                   [(ngModel)]="claim.claimNumber"
+                                   [disabled]="isNoGenerated"
+                                   required
+
+                            />
+                            <p-button label="Generate" icon="pi pi-refresh" (onClick)="generateClaimNumber()" [disabled]="isNoGenerated"></p-button>
+                        </div>
+                    </div>
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label for="claimStatus">Claim Status</label>
+                        <p-dropdown
+                            [options]="claimStatuses"
+                            placeholder="Select Policy Status"
+                            [showClear]="true"
+                            id="claimStatus"
+                            required
+                            name="claimStatus"
+                            #claimStatus="ngModel"
+                            [(ngModel)]="claim.claimStatus"
+
+
+                        ></p-dropdown>
+
+                    </div>
+
+                    <!-- Notification Date -->
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Notification Date</label>
+                        <div class="p-inputwrapper">
+                            <p-calendar
+                                name="notificationDate"
+                                #notificationDate="ngModel"
+                                [(ngModel)]="claim.notificationDate"
+                                required
+                            ></p-calendar>
+                        </div>
+                    </div>
+
+                    <!-- Time of Loss -->
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Time of Loss</label>
+                        <div class="p-inputwrapper">
+                            <p-calendar
+                                name="timeOfLoss"
+                                #timeOfLoss="ngModel"
+                                [(ngModel)]="claim.timeOfLoss"
+                                [showTime]="true"
+                                required
+                            ></p-calendar>
+                        </div>
+                    </div>
+
+                    <!-- Loss Amount -->
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Loss Amount</label>
+                        <input pInputText
+                               type="number"
+                               name="lossAmount"
+                               [(ngModel)]="claim.lossAmount"
+                               required
+                        />
+                    </div>
+
+                    <!-- Loss Details -->
+                    <div class="field sm:col-12 md:col-6 lg:col-3">
+                        <label>Loss Details</label>
+                        <textarea pInputTextarea
+                                  name="lossDetails"
+                                  [(ngModel)]="claim.lossDetails"
+                                  required
+                        ></textarea>
+                    </div>
+
+                    <div class="field sm:col-12 md:col-12 lg:col-12">
+                        <label >Claim Forms</label>
+                        <p-fileUpload
+
+                            (onBeforeUpload)="onBeforeUpload($event)"
+
+                            name="files"  [url]="uploadUrl" (onUpload)="onUpload($event)" [multiple]="true"
+                            [accept]="'.jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt'"
+                            maxFileSize="6000000">
+                            <ng-template pTemplate="content">
+                                <ul *ngIf="uploadedFiles.length">
+                                    <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+                                </ul>
+                            </ng-template>
+                        </p-fileUpload>
+                    </div>
+
+                </div>
+            </div>
+
+            <button type="submit" pButton label="Submit" [disabled]="(!form.valid) || !filesUploaded"></button>
+        </div>
+
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<form #form="ngForm" (ngSubmit)="submitForm()">-->
+<!--    <div class="grid">-->
+
+
+<!--        <div class="col-12">-->
+<!--            <div class="card">-->
+<!--                <h5>Advanced</h5>-->
+<!--                <div class="p-fluid p-formgrid grid">-->
+
+<!--                    <div class="field col-12 md:col-3">-->
+<!--                        <label>Date of Loss</label>-->
+<!--                        <div class="p-inputwrapper" appCibInputDirective>-->
+<!--                            <input-->
+<!--                                pInputText-->
+<!--                                type="text"-->
+<!--                                name="dateOfLoss"-->
+<!--                                #dateOfLoss="ngModel"-->
+<!--                                [(ngModel)]="claim.dateOfLoss"-->
+
+<!--                                required-->
+<!--                            />-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="field col-12 md:col-3">-->
+<!--                        <label htmlFor="city">City</label>-->
+<!--                        <input pInputText id="TEST" type="text" />-->
+<!--                    </div>-->
+<!--                    <div class="field col-12 md:col-3">-->
+<!--                        <label htmlFor="state">State</label>-->
+<!--                        <p-dropdown [options]="[]" optionLabel="name"></p-dropdown>-->
+<!--                    </div>-->
+<!--                    <div class="field col-12 md:col-3">-->
+<!--                        <label htmlFor="zip">Zip</label>-->
+<!--                        <input pInputText id="zip" type="text" />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</form>-->
+

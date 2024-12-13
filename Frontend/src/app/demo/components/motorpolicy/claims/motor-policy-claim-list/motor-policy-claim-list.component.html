@@ -1,0 +1,84 @@
+
+<div class="card">
+    <h4>Listing Claims</h4>
+    <p-contextMenu #cm [model]="menuItems" appendTo="body"></p-contextMenu>
+    <p-table
+        [contextMenu]="cm"
+        [(contextMenuSelection)]="selectedClaim"
+        [columns]="cols"
+        [value]="claims"
+        (onLazyLoad)="loadData($event)"
+        [responsiveLayout]="'stack'"
+        [breakpoint]="'960px'"
+        dataKey="id"
+        [lazy]="true"
+        [paginator]="true"
+        [rows]="10"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+        [exportHeader]="'customExportHeader'"
+
+
+        [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10, 25, 50 , 100]"
+        rowExpandMode="single"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <!--                <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>-->
+                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr >
+
+                <th></th>
+                <th>Documents</th>
+                <th *ngFor="let col of columns">
+                    {{ col.header }}
+                </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-claim>
+            <tr [pContextMenuRow]="claim">
+                <td>
+                    <p-toast></p-toast>
+
+                </td>
+                <td class="p-column-title">
+
+                    <app-documents-dialog [policyType]="POLICY_TYPE.MOTORPOLICY" title="Claims documents for {{claim?.claimNumber}}" [moduleType]="CIBModuleType.CLAIM" [policyId]="claim.id"></app-documents-dialog>
+
+                </td>
+
+                <td>{{ claim.id }}</td>
+                <td>{{ claim.claimStatus }}</td>
+                <td>{{ claim.claimNumber }}</td>
+                <td>{{ claim.dateOfLoss }}</td>
+                <td>{{ claim.notificationDate }}</td>
+                <td>{{ claim.timeOfLoss }}</td>
+                <td>{{ claim.lossAmount }}</td>
+                <td>{{ claim.lossDetails }}</td>
+                <td>{{ claim.createdAt }}</td>
+                <td>{{ claim.createdBy }}</td>
+
+
+
+
+
+
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-table>
+</div>

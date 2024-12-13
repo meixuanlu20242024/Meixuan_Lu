@@ -1,0 +1,89 @@
+
+
+
+<p-dialog header="Bordeax Filters for {{insurerName}}"
+          [breakpoints]="{ '960px': '75vw' }"
+          [maximizable]="true"
+          [closeOnEscape]="true"
+          (onHide)="closeDialog()"
+          [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+
+    <form #form="ngForm" (ngSubmit)="submitForm()">
+        <div class="grid">
+            <p-messages></p-messages>
+
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="p-fluid p-formgrid grid">
+
+
+                        <div class="field sm:col-12 md:col-6 lg:col-3">
+                            <label>Period From</label>
+                            <div class="p-inputwrapper" >
+
+                                <p-calendar
+                                    name="periodFrom"
+                                    #periodFrom="ngModel"
+                                    [(ngModel)]="bordreauxForm.periodFrom"
+                                    required
+                                ></p-calendar >
+                            </div>
+
+                        </div>
+
+                        <div class="field sm:col-12 md:col-6 lg:col-3">
+                            <label>Period To</label>
+                            <div class="p-inputwrapper" >
+
+                                <p-calendar
+                                    name="periodTo"
+                                    #periodTo="ngModel"
+                                    [(ngModel)]="bordreauxForm.periodTo"
+                                    required
+                                ></p-calendar >
+                            </div>
+
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+
+                            <label>Currency</label>
+                            <p-dropdown
+                                [options]="currencies"
+                                name="currency"
+                                #currency="ngModel"
+                                [(ngModel)]="bordreauxForm.currency"
+                                required
+                            >
+
+                            </p-dropdown>
+                        </div>
+                        <div class="field col-12 md:col-3">
+
+                            <label>Bordreaux Type</label>
+                            <p-dropdown
+                                [options]="bordTypes"
+                                name="bordType"
+                                #bordType="ngModel"
+                                [(ngModel)]="bordreauxForm.bordType"
+                                required
+                            >
+
+                            </p-dropdown>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <button type="submit" pButton label="Generate Bordeaux " [disabled]="(!form.valid)"></button>
+            </div>
+
+        </div>
+
+    </form>
+
+
+
+</p-dialog>

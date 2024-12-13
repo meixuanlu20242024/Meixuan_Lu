@@ -1,0 +1,146 @@
+
+<div class="card">
+    <h4>Listing Motor Policies {{state.period}} </h4>
+
+    <p-contextMenu #cm [model]="menuItems" appendTo="body"></p-contextMenu>
+    <p-table
+        #pTable
+        [contextMenu]="cm"
+        [(contextMenuSelection)]="selectedPolicy"
+        [columns]="cols"
+        [value]="policies"
+        (onLazyLoad)="loadData($event)"
+        [responsiveLayout]="'stack'"
+        [breakpoint]="'960px'"
+        dataKey="id"
+        [lazy]="true"
+        [paginator]="true"
+        [rows]="10"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+        [exportHeader]="'customExportHeader'"
+        [globalFilterFields]="['insured.name','policyNo']"
+        selectionMode="single"
+        (onRowSelect)="onRowSelect($event)"
+
+        [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10, 25, 50 , 100]"
+        rowExpandMode="single"
+    >
+
+        <ng-template pTemplate="caption">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="text-align: right">
+                    <i class="pi pi-search" style="margin: 4px 4px 0 0"></i>
+                    <input
+                        type="text"
+                        pInputText
+                        size="50"
+                        placeholder="Global Filter"
+                        (input)="pTable.filterGlobal($any($event.target).value, 'contains')"
+                    />
+                </div>
+                <div *ngIf="selectedPolicy" style="margin-left: 20px;">
+                    <span class="text-primary font-semibold text-xl">{{ selectedPolicy.insured.name }} | Policy No : {{selectedPolicy.policyNo }}</span>
+
+                </div>
+                <div class="flex">
+                    <button
+                        type="button"
+                        pButton
+                        pRipple
+                        icon="pi pi-file-excel"
+                        (click)="exportExcel()"
+                        class="p-button-success mr-2"
+                        pTooltip="XLS"
+                        tooltipPosition="bottom"
+                    ></button>
+                    <button
+                        type="button"
+                        pButton
+                        pRipple
+                        icon="pi pi-file-pdf"
+                        (click)="exportPdf()"
+                        class="p-button-warning mr-2"
+                        pTooltip="PDF"
+                        tooltipPosition="bottom"
+                    ></button>
+                    <p-button label="New policy" routerLink="/motor-policy/create-policy" icon="pi pi-plus"></p-button>
+                </div>
+
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header" let-columns>
+            <tr >
+
+                <th></th>
+
+                <th *ngFor="let col of columns">
+                    {{ col.header }}
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-policy>
+            <tr [pSelectableRow]="policy" [pContextMenuRow]="policy" >
+                <td>
+                    <p-toast></p-toast>
+
+                </td>
+                <td>{{ policy.id }}</td>
+
+                <td>
+                    <div class="p-badge" [ngClass]="{
+                            'p-badge-danger': policy.policyStatus === 'DECLINED',
+                            'p-badge-warning': policy.policyStatus === 'PENDING',
+                            'p-badge-success': policy.policyStatus === 'APPROVED'
+                          }">
+                        {{ policy?.policyStatus }}
+                    </div>
+                </td>
+
+                <td class="p-column-title">{{ policy?.insured.name }}</td>
+                <td class="p-column-title">{{ policy?.insurer.name }}</td>
+                <td class="p-column-title">{{ policy?.currency }}</td>
+                <td class="p-column-title">{{ policy?.fleetIndividual }}</td>
+                <td class="p-column-title">{{ policy?.periodFrom }}</td>
+                <td class="p-column-title">{{ policy?.periodTo }}</td>
+                <td>
+                    <div class="p-badge" [ngClass]="{
+                            'p-badge-danger': isExpired(policy.periodTo),
+                            'p-badge-success': !isExpired(policy.periodTo)
+                        }">
+                        {{ isExpired(policy.periodTo) ? 'EXPIRED' : 'ACTIVE'}}
+                    </div>
+                </td>
+                <td class="p-column-title">
+                    <app-motor-claims-per-policy title="Claims  for insured :  {{policy?.insured.name}}" [policyId]="policy?.id"></app-motor-claims-per-policy>
+
+                </td>
+                <td class="p-column-title">{{ policy?.policyEndorsements }}</td>
+                <td class="p-column-title">
+
+                    <app-documents-dialog [policyType]="POLICY_TYPE.MOTORPOLICY" title="Motor Policy Documents for  {{policy?.insured.name}}" [moduleType]="CIBModuleType.POLICY" [policyId]="policy.id"></app-documents-dialog>
+                </td>
+                <td class="p-column-title">{{ policy?.policyNo }}</td>
+                <td class="p-column-title">{{ policy?.coverType }}</td>
+                <td class="p-column-title">{{ policy?.sumInsured }}</td>
+                <td class="p-column-title">{{ policy?.premium }}</td>
+                <td class="p-column-title">{{ policy?.rate }}</td>
+                <td class="p-column-title">{{ policy?.stampDuty }}</td>
+                <td class="p-column-title">{{ policy?.createdAt }}</td>
+                <td class="p-column-title">{{ policy?.createdBy }}</td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-table>
+</div>
